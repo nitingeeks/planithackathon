@@ -1,0 +1,48 @@
+<ngx-flash-messages></ngx-flash-messages>
+<header>
+  <article>
+    <ul class="nav navbar-nav navalgin">
+      <li><a routerLink="/favorite">Favorite</a></li>
+      <li><a routerLink="/search">Search</a></li>
+    </ul>
+  </article>
+  <h1>Movie App</h1>
+</header>
+
+<section class="search-results" >
+  <div class="container ">
+    <article class="text-center row form-group">
+      <h2>Favorite Movie</h2>
+    </article>
+    <!--(click)='OnUpdate(movie)'-->
+
+    <div class="col-md-4 singleItem" *ngFor="let movie of favoriteMovieResult" >
+      <i class="glyphicon glyphicon-remove favIcon" (click)='OnRemove(movie)' title='Remove from favorite'></i>
+      <i class="glyphicon glyphicon-pencil updateIcon" (click)="(editRowId = movie.id)&&(isEdit=true) " title='Update Movie'></i>
+
+      <img src="https://image.tmdb.org/t/p/w320{{movie.poster_path}}" >
+      <div *ngIf="editRowId == movie.id">
+        <h4><input *ngIf="isEdit" (keydown.enter)="OnUpdate(movie)" type="text"  name="movieTitle"  [(ngModel)]="movie.title" /></h4>
+        <h5></h5>
+       <!--
+
+       <h3  *ngIf="false" class="title">{{movie.title}}</h3>-->
+      </div>
+
+      <div *ngIf="editRowId != movie.id">
+        <h3  class="title">{{movie.title}}</h3>
+      </div>
+
+
+
+
+      <label>{{onGenre(movie.genre_ids)}}</label>
+      <p>{{movie.overview}}</p>
+      <small>Release Date : {{ movie.release_date | date:'medium' }}</small>
+    </div>
+
+    <div class="loadalgin" *ngIf="show">
+      <img src="/assets/loader.gif" alt="Loading..."/>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+<ngx-flash-messages></ngx-flash-messages>
+
+<header>
+  <article>
+    <ul class="nav navbar-nav navalgin">
+      <li><a routerLink="/search" class="active">Search</a></li>
+      <li><a class="disabled" routerLink="/favorite">Register</a></li>
+      <li><a class="disabled" routerLink="/favorite">Favorite</a></li> 
+    </ul>
+  </article>
+  <h1>Annalect Face</h1>
+</header>
+<section class="search-results" infinite-scroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="500"
+         (scrolled)="onScroll()"
+         [scrollWindow]="false">
+  <div class="container ">
+      <article class="text-center row form-group">
+        <h2>Enter Movie name to Search </h2>
+        <input [(ngModel)]="searchText" placeholder="name" class="col-xs-offset-2 col-xs-8"/>
+        <button (click)="OnSearch()" class="col-xs-1  btn btn-warning searchAlgin">Search <i class="glyphicon glyphicon-arrow-right"></i>
+        </button>
+      </article>
+    <div class="col-md-4 singleItem" *ngFor="let movie of movieNameResult" >
+        <i class="glyphicon glyphicon-star favIcon"  (click)='OnFavorite(movie)' title='Add to Favorite'></i>
+        <img src="https://image.tmdb.org/t/p/w320{{movie.poster_path}}" >
+        <h3 class="title">{{movie.title}}</h3>
+        <label>{{onGenre(movie.genre_ids)}}</label>
+        <p>{{movie.overview}}</p>
+        <small>Release Date : {{ movie.release_date | date:'medium' }}</small>
+    </div>
+
+    <div class="loadalgin" *ngIf="show">
+      <img src="/assets/loader.gif" alt="Loading..."/>
+    </div>
+  </div>
+</section>
